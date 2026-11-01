@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>中國語文島 · 中一上</title>
+<style>
+:root{
+  --ink:#2c1810; --card:#fbf6eb; --good:#2f9e44; --bad:#c92a2a; --gold:#c45c26;
+  --sky:#f3e9d7; --deep:#3d2914; --wave:#a33b24; --foam:#fffaf0;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;min-height:100%;font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei","Segoe UI",system-ui,sans-serif;
+  background:
+    radial-gradient(ellipse at 12% 8%,rgba(196,92,38,.22),transparent 42%),
+    radial-gradient(ellipse at 88% 92%,rgba(61,120,80,.18),transparent 48%),
+    linear-gradient(180deg,#2a1a10 0%,#4a2c14 38%,#6b3a1f 72%,#1f140c 100%);
+  color:#fff8ef;overscroll-behavior:none}
+body{min-height:100dvh;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+header{max-width:1100px;margin:0 auto;padding:14px 16px 0}
+header h1{margin:0;font-size:clamp(20px,5.2vw,30px);letter-spacing:.04em;text-shadow:0 3px 0 rgba(0,0,0,.35),0 8px 20px rgba(0,0,0,.3);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+header h1 .badge{font-size:12px;background:linear-gradient(180deg,#f3e0c5,#d4a574);color:#5c2e0e;padding:4px 10px;border-radius:999px;border:2px solid #e8c49a;box-shadow:0 3px 0 #7a3f18;font-weight:800}
+header p{margin:8px 0 0;font-size:14px;line-height:1.6;color:#f0e0cc;max-width:920px;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.topbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+.chip{background:rgba(163,59,36,.28);backdrop-filter:blur(6px);border:2px solid rgba(232,196,154,.45);border-radius:999px;padding:8px 14px;font-weight:800;font-size:13px;box-shadow:0 3px 0 rgba(0,0,0,.2)}
+#home{max-width:1100px;margin:0 auto;padding:12px 16px 48px}
+.hero{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:8px 0 16px;padding:14px 16px;border-radius:20px;
+  background:linear-gradient(135deg,rgba(232,196,154,.3),rgba(61,120,80,.16));
+  border:3px solid rgba(232,196,154,.5);box-shadow:0 10px 0 rgba(0,0,0,.18),0 18px 40px rgba(0,0,0,.22)}
+.mascot{width:72px;height:72px;font-size:56px;line-height:1;filter:drop-shadow(0 8px 12px rgba(0,0,0,.3));animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.hero h2{margin:0 0 4px;font-size:clamp(17px,4vw,22px);text-shadow:0 2px 0 rgba(0,0,0,.25)}
+.hero p{margin:0;font-size:13.5px;line-height:1.55;color:#fff8ef}
+.nick-box{margin:0 0 16px;padding:12px 14px;border-radius:16px;background:rgba(30,18,10,.45);border:2px solid rgba(212,165,116,.45)}
+.nick-box label{font-weight:800;font-size:13px;display:block;margin-bottom:6px}
+.nick-box input{width:100%;max-width:280px;font-size:16px;padding:10px 12px;border-radius:12px;border:2px solid #d4a574;font-family:inherit;font-weight:700;color:#1f140c}
+.mode-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:0 0 18px}
+.mode-card,.ch-card,.lv-btn{border:none;cursor:pointer;touch-action:manipulation;font-family:inherit;text-align:left;padding:16px 14px;border-radius:18px;color:#fff;font-weight:900;
+  box-shadow:0 8px 0 rgba(0,0,0,.25),0 14px 28px rgba(0,0,0,.2);transition:transform .12s,box-shadow .12s;min-height:100px;
+  background:linear-gradient(165deg,rgba(232,196,154,.3),rgba(42,26,16,.42));border:3px solid rgba(232,196,154,.5)}
+.mode-card:active,.ch-card:active,.lv-btn:active{transform:translateY(4px);box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.mode-card .emo,.ch-card .emo{font-size:28px;display:block;margin-bottom:4px}
+.mode-card .ttl,.ch-card .ttl{font-size:15px;text-shadow:0 2px 0 rgba(0,0,0,.25);line-height:1.35}
+.mode-card .meta,.ch-card .meta,.lv-btn .meta{margin-top:6px;font-size:12px;opacity:.92;font-weight:700;line-height:1.4}
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.ch-card .en{font-size:11px;font-weight:700;opacity:.88;margin-top:4px;line-height:1.35;color:#f0e0cc}
+.lv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:10px}
+.lv-btn{min-height:90px;text-align:center}
+.lv-btn .ttl{font-size:17px}
+.back-row{margin:0 0 12px}
+.back-row button,.panel-top button,button.nav{font-family:inherit;font-weight:800;cursor:pointer;touch-action:manipulation;border-radius:14px;border:2px solid #e8c49a;background:linear-gradient(180deg,#fffaf0,#e8c49a);color:#5c2e0e;padding:10px 14px;font-size:14px;box-shadow:0 3px 0 #7a3f18}
+#panel{display:none;position:fixed;inset:0;z-index:40;background:rgba(20,12,6,.62);backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding:8px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#panel.show{display:flex;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.card{width:100%;max-width:720px;margin:4px auto 20px;background:linear-gradient(180deg,#fffaf0,#f3e9d7);color:var(--ink);border-radius:22px;padding:14px 14px 18px;position:relative;box-shadow:0 16px 0 rgba(0,0,0,.18),0 28px 60px rgba(0,0,0,.35);border:3px solid #fff8ef;animation:cardIn .32s cubic-bezier(.2,.9,.3,1);max-height:min(92dvh,900px);overflow-y:auto}
+@keyframes cardIn{from{transform:translateY(18px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+.card::before{content:"";position:absolute;left:12px;right:12px;top:8px;height:6px;border-radius:999px;background:linear-gradient(90deg,#c45c26,#3d7850,#d4a574,#a33b24,#6b8f71)}
+.panel-top{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 8px;align-items:center}
+.panel-top button:active{transform:translateY(2px);box-shadow:0 1px 0 #7a3f18}
+#ptitle{margin:4px 0 6px;font-size:clamp(16px,4vw,20px);color:#7a2e12}
+.subline{font-size:12.5px;color:#a33b24;font-weight:700;margin-bottom:8px}
+.score-pill{display:inline-flex;gap:8px;flex-wrap:wrap;margin:4px 0 8px}
+.score-pill span{background:#f3e9d7;border:2px solid #d4a574;color:#7a3f18;font-weight:900;font-size:12px;padding:4px 10px;border-radius:999px}
+.task-card{margin:6px 0 10px;padding:12px 14px;border-radius:16px;background:linear-gradient(180deg,#fff,#fbf6eb);border:3px solid #c45c26;box-shadow:0 4px 0 #7a3f18}
+.task-card .mission{font-size:12px;font-weight:900;color:#a33b24;letter-spacing:.04em;margin-bottom:4px}
+.task-card .q{font-size:clamp(15px,4vw,18px);line-height:1.5;font-weight:900;margin:0;color:var(--ink)}
+.passage-box{margin:8px 0 12px;padding:12px 14px;border-radius:14px;background:#fffdf8;border:2px dashed #d4a574;color:#2c1810;font-size:14px;line-height:1.75;white-space:pre-wrap;font-weight:600;max-height:220px;overflow-y:auto}
+.sec-tag{display:inline-block;font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;margin-right:6px;background:#f3e9d7;color:#7a3f18;border:1px solid #d4a574}
+.kind-tag{display:inline-block;font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;background:#d3f9d8;color:#065f46;border:1px solid #10b981}
+.bonus-tag{display:inline-block;font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;background:#fef3c7;color:#92400e;border:1px solid #f59e0b}
+.tf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.tf-row .opt{margin:0;text-align:center;font-size:17px}
+.paper-meta{font-size:12px;line-height:1.45;opacity:.92;font-weight:700;margin-top:6px}
+.sec-list{margin:6px 0 0;padding-left:18px;font-size:12px;font-weight:700;opacity:.9;line-height:1.45}
+.opt{display:block;width:100%;text-align:left;margin:8px 0 0;padding:14px 14px;font-size:15px;font-weight:800;font-family:inherit;border-radius:14px;border:3px solid #e8c49a;background:linear-gradient(180deg,#fff,#fbf6eb);color:var(--ink);cursor:pointer;touch-action:manipulation;box-shadow:0 4px 0 #7a3f18}
+.opt:active{transform:translateY(2px);box-shadow:0 1px 0 #7a3f18}
+.opt.picked{outline:3px solid #c45c26}
+.opt.good{background:linear-gradient(180deg,#d3f9d8,#8ce99a)!important;border-color:#2f9e44;box-shadow:0 4px 0 #2f9e44}
+.opt.bad{background:linear-gradient(180deg,#ffe3e3,#ffa8a8)!important;border-color:#c92a2a;box-shadow:0 4px 0 #c92a2a}
+.opt:disabled{opacity:.75;cursor:not-allowed}
+.input-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.input-row input{flex:1 1 160px;font-size:17px;padding:12px 14px;border-radius:12px;border:3px solid #c45c26;font-family:inherit;font-weight:700;color:var(--ink)}
+button.go{display:block;width:100%;text-align:center;margin:10px 0 0;padding:14px;font-size:17px;border:3px solid #7a3f18;background:linear-gradient(180deg,#e8c49a,#c45c26);color:#1f140c;box-shadow:0 5px 0 #5c2e0e;font-family:inherit;font-weight:900;cursor:pointer;touch-action:manipulation;border-radius:14px}
+button.go:active{transform:translateY(3px);box-shadow:0 1px 0 #5c2e0e}
+button:disabled{opacity:.55;cursor:not-allowed}
+#why{min-height:22px;font-weight:800;color:#7a2e12;margin-top:8px;font-size:14px}
+#fx{pointer-events:none;position:absolute;inset:0;overflow:hidden;z-index:5}
+#fx .bit{position:absolute;top:-16px;font-size:22px;animation:confetti 1.4s ease-out forwards;opacity:0}
+@keyframes confetti{0%{opacity:0;transform:translateY(0) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translateY(120px) rotate(240deg)}}
+.praise{pointer-events:none;position:absolute;left:50%;top:8%;transform:translateX(-50%) scale(.7);z-index:8;text-align:center;min-width:55%;animation:praisePop 1.7s cubic-bezier(.2,1.2,.3,1) forwards;opacity:0}
+.praise .emoji{display:block;font-size:clamp(34px,9vw,52px);filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+.praise .text{display:inline-block;background:linear-gradient(180deg,#f3e9d7,#d4a574);color:#5c2e0e;font-weight:900;font-size:clamp(16px,4vw,24px);padding:10px 18px;border-radius:999px;border:3px solid #e8c49a;box-shadow:0 7px 0 #7a3f18}
+@keyframes praisePop{0%{opacity:0;transform:translateX(-50%) scale(.5)}18%{opacity:1;transform:translateX(-50%) scale(1.06)}70%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-10px) scale(.95)}}
+.card.celeb{box-shadow:0 0 0 4px rgba(196,92,38,.55),0 16px 0 rgba(0,0,0,.18),0 28px 60px rgba(0,0,0,.35)}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.report-sum{margin:8px 0;padding:12px;border-radius:14px;background:linear-gradient(180deg,#e6fcf5,#c3fae8);border:2px solid #0b9b6b;font-weight:900;color:#134e4a}
+.report-encourage{margin:6px 0 12px;font-weight:900;color:#a33b24;font-size:15px}
+.report-banner{margin:8px 0;padding:10px 12px;border-radius:12px;background:#f3e9d7;border:2px solid #c45c26;font-weight:900;color:#7a3f18}
+.report-item{margin:8px 0;padding:10px 12px;border-radius:12px;background:#fffaf0;border:2px solid #e8c49a;font-size:13.5px;line-height:1.45;color:#3d2914}
+.report-item.ok{border-color:#8ce99a;background:#ebfbee}
+.report-item.ng{border-color:#ffa8a8;background:#fff5f5}
+.report-note{font-size:12.5px;color:#a33b24;font-weight:700;margin:8px 0}
+.analysis{margin:8px 0;padding:12px;border-radius:14px;background:linear-gradient(180deg,#fbf6eb,#f3e9d7);border:2px solid #d4a574;color:#3d2914;font-size:13.5px;line-height:1.5;font-weight:700}
+.foot{text-align:center;font-size:12px;color:#e8c49a;opacity:.85;padding:8px 16px 24px}
+.hidden{display:none!important}
+.prog{height:10px;background:rgba(30,18,10,.25);border-radius:999px;overflow:hidden;margin:8px 0 4px;border:1px solid rgba(212,165,116,.4)}
+.prog>i{display:block;height:100%;background:linear-gradient(90deg,#3d7850,#c45c26);width:0;transition:width .25s}
+@media (prefers-reduced-motion:reduce){.mascot,#fx,.praise{animation:none!important}}
+#gate{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;
+  background:rgba(20,12,6,.88);backdrop-filter:blur(8px)}
+#gate.pass-ok{display:none!important}
+.gate-card{width:100%;max-width:380px;padding:22px 20px 20px;border-radius:22px;
+  background:linear-gradient(180deg,#fffaf0,#f3e9d7);color:#2c1810;border:3px solid #fff8ef;
+  box-shadow:0 16px 0 rgba(0,0,0,.18),0 28px 60px rgba(0,0,0,.35);text-align:center}
+.gate-card h2{margin:0 0 6px;font-size:22px;color:#7a2e12}
+.gate-card .hint{margin:0 0 14px;font-size:13.5px;font-weight:700;color:#a33b24}
+.gate-card input{width:100%;font-size:18px;padding:12px 14px;border-radius:12px;border:3px solid #c45c26;
+  font-family:inherit;font-weight:700;color:#1f140c;text-align:center;letter-spacing:.12em}
+.gate-card button.go{margin-top:12px}
+#gateErr{min-height:22px;margin-top:10px;font-weight:800;font-size:14px;color:#c92a2a}
+
+</style>
+</head>
+<body>
+
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-card">
+    <h2 id="gateTitle">進入語文島</h2>
+    <p class="hint">請輸入密碼開始</p>
+    <input id="gatePass" type="password" autocomplete="off" maxlength="32" placeholder="密碼" aria-label="密碼">
+    <button type="button" class="go" id="gateEnter">進入</button>
+    <div id="gateErr" aria-live="polite"></div>
+  </div>
+</div>
+<header>
+  <h1>🏯 中國語文島 · 中一上 <span class="badge">啟思中一上第五版</span></h1>
+  <p>依據啟思《中國語文》（第五版）中一上。涵蓋單元練習、綜合挑戰、測驗卷、語文基礎知識與獨立閱讀理解。選擇、是非、填充題；只計第一次答對；答錯須改對才可下一題。完結顯示分析與正解。可選玩家代號——請勿填寫真名。</p>
+  <div class="topbar">
+    <span class="chip" id="hudMode">模式：主頁</span>
+    <span class="chip" id="hudQ">題庫：—</span>
+    <span class="chip" id="hudNick">代號：訪客</span>
+  </div>
+</header>
+<main id="home"></main>
+<p class="foot">離線可用 · 不收真名 · gameId=s1-chi-lang-quiz · 啟思中國語文中一上第五版 · 單元練習 · 綜合挑戰 · 測驗卷 · 語文基礎知識 · 閱讀理解</p>
+<div id="panel" role="dialog" aria-modal="true"><div class="card" id="card"><div id="fx"></div>
+  <div class="panel-top" id="ptop">
+    <button type="button" id="btnBack">返回</button>
+    <button type="button" id="btnSettle" style="display:none">提早結束</button>
+  </div>
+  <h2 id="ptitle"></h2>
+  <div class="subline" id="where"></div>
+  <div class="score-pill"><span id="score">得分 0</span><span id="scoreHint"></span><span id="timerChip">用時 0:00</span></div>
+  <div class="prog" id="progBar" aria-hidden="true"><i id="progFill"></i></div>
+  <div id="q"></div>
+  <div id="opts"></div>
+  <div id="why"></div>
+  <button type="button" class="go" id="next" style="display:none">下一題</button>
+</div></div>
+<script>
+const DATA = {"CHAPTERS": [{"id": "u1", "titleZh": "單元一　細說今昔事", "titleEn": "記敍的要素和方法", "emoji": "📜", "levels": [[{"kind": "mc", "sec": "記敍要素", "q": "記敍六要素不包括下列哪一項？", "opts": ["時間、地點、人物", "原因、經過、結果", "韻腳、平仄、對仗", "事件的原因與結果"], "ans": 2, "hint": "六要素是：時、地、人、因、經、果"}, {"kind": "mc", "sec": "記敍方法", "q": "按事情發生的先後次序來寫，叫做？", "opts": ["倒敍法", "順敍法", "插敍法", "補敍法"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "作者篇名", "q": "《楊修之死》的作者是____（羅貫中／干寶）。", "ans": "羅貫中", "accept": ["羅貫中"], "hint": "《三國演義》作者"}, {"kind": "mc", "sec": "《桑中生李》", "q": "《桑中生李》選自哪部書？", "opts": ["《史記》", "《搜神記》", "《三國演義》", "《莊子》"], "ans": 1, "hint": "干寶所著志怪小說"}, {"kind": "tf", "sec": "標點", "q": "頓號（、）用來表示句子內部一般的停頓。", "ans": false, "hint": "頓號用於並列詞語之間；一般停頓用逗號。"}], [{"kind": "mc", "sec": "記敍方法", "q": "《楊修之死》主要採用哪種記敍方法？", "opts": ["順敍", "倒敍", "平敍", "環敍"], "ans": 1, "hint": "先寫斬楊修，再追寫舊事"}, {"kind": "mc", "sec": "《楊修之死》", "q": "曹操以「雞肋」為口令後，楊修被斬的直接罪名是？", "opts": ["偷吃一合酥", "惑亂軍心", "夢中殺人", "闊門題字"], "ans": 1, "hint": "近因是雞肋事件"}, {"kind": "input", "sec": "文言虛詞", "q": "「愛修之才」的「之」可譯為____。", "ans": "的", "accept": ["的"], "hint": "結構助詞"}, {"kind": "mc", "sec": "《兩角錢》", "q": "《兩角錢》的中心句位置在？", "opts": ["開頭", "中間", "結尾", "沒有中心句"], "ans": 0, "hint": "舉手之勞卻常熟視無睹"}, {"kind": "tf", "sec": "《歪兒》", "q": "《歪兒》一文主要用倒敍法寫暑假遊戲。", "ans": false, "hint": "《歪兒》是順敍。"}], [{"kind": "mc", "sec": "《楊修之死》", "q": "園門上寫「活」，楊修解作門中添「活」為？", "opts": ["闊", "閒", "間", "閉"], "ans": 0, "hint": "門＋活＝闊"}, {"kind": "mc", "sec": "倒敍好處", "q": "倒敍法的主要好處是？", "opts": ["更客觀公正", "吸引讀者追看", "減少人物描寫", "取消六要素"], "ans": 1, "hint": "先寫結局或重要情節以吸引讀者"}, {"kind": "input", "sec": "《桑中生李》", "q": "張助遠行歸來後，對眾人說此樹無神，並把樹____了。", "ans": "砍", "accept": ["砍", "斫", "砍了", "斫之", "砍掉"], "hint": "「因就斫之」"}, {"kind": "mc", "sec": "古今詞義", "q": "文言「妻子」在古典作品中常指？", "opts": ["僅指太太", "妻子和子女", "只指女兒", "只指兒子"], "ans": 1, "hint": "勿以今義硬套"}]]}, {"id": "u2", "titleZh": "單元二　家喻戶曉的人物", "titleEn": "敍事寫人", "emoji": "🦸", "levels": [[{"kind": "mc", "sec": "傳記", "q": "傳記記人物事跡，必須？", "opts": ["全是虛構幻想", "有事實根據", "只用詩歌寫成", "不寫姓名"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "《逐光的稚子》", "q": "高錕被稱為「____之父」。", "ans": "光纖", "accept": ["光纖", "光纖通訊", "光導纖維"], "hint": "光纖通訊奠基者"}, {"kind": "mc", "sec": "《木蘭辭》", "q": "《木蘭辭》一般認為是哪類詩歌？", "opts": ["唐詩絕句", "樂府詩", "宋詞", "元曲"], "ans": 1, "hint": "選自《樂府詩集》"}, {"kind": "mc", "sec": "詞類", "q": "「很高」的「很」屬於？", "opts": ["名詞", "動詞", "形容詞", "副詞"], "ans": 3, "hint": "副詞修飾形容詞"}, {"kind": "tf", "sec": "標點", "q": "疑問句句末一般用問號。", "ans": true, "hint": ""}], [{"kind": "mc", "sec": "《岳飛之少年時代》", "q": "岳飛未滿月時，母親抱他坐在甚麼裏衝濤至岸？", "opts": ["大船", "大甕", "木箱", "竹筏"], "ans": 1, "hint": "黃河決口"}, {"kind": "mc", "sec": "《木蘭辭》", "q": "「願為市鞍馬」的「市」意思是？", "opts": ["城市", "買", "市場管理員", "祭拜"], "ans": 1, "hint": "一字多義：買"}, {"kind": "input", "sec": "虛詞「也」", "q": "「何也？」的「也」可譯為____。", "ans": "呢", "accept": ["呢"], "hint": "句末疑問語氣"}, {"kind": "mc", "sec": "《平民總統孫中山》", "q": "孫中山會見達官顯貴通常限時多久？", "opts": ["不限時間", "五分鐘", "一小時", "整天"], "ans": 1, "hint": "對普通羣眾則不限"}, {"kind": "tf", "sec": "《木蘭辭》", "q": "木蘭願意接受尚書郎的官職。", "ans": false, "hint": "她只願借明駝千里足還鄉"}], [{"kind": "mc", "sec": "虛詞「安」", "q": "「安能辨我是雄雌」的「安」是？", "opts": ["疑問代詞（哪裏）", "疑問副詞（怎麼）", "結構助詞", "名詞"], "ans": 1, "hint": "怎麼／豈，常表反問"}, {"kind": "mc", "sec": "岳飛取名", "q": "岳飛取名的由來是？", "opts": ["夢中神仙賜名", "大鳥如鵠飛鳴屋上", "老師隨意取名", "皇帝御賜"], "ans": 1, "hint": "字鵬舉"}, {"kind": "input", "sec": "推測詞義", "q": "「及岸」的「及」在文中解作____。", "ans": "到達", "accept": ["到達", "到", "抵達"], "hint": "母抱岳飛坐甕衝濤而下，得不死"}, {"kind": "mc", "sec": "孫中山", "q": "杭州度假時，孫中山對警察說自己是？", "opts": ["貴人", "平民", "皇帝", "將軍"], "ans": 1, "hint": "「我是一個平民」"}]]}, {"id": "u3", "titleZh": "單元三　親情暖心間", "titleEn": "借事抒情", "emoji": "🧡", "levels": [[{"kind": "mc", "sec": "抒情方法", "q": "直接說出感情，叫做？", "opts": ["借事抒情", "直接抒情", "託物言志", "借景抒情"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "《背影》", "q": "《背影》的作者是____。", "ans": "朱自清", "accept": ["朱自清"], "hint": "字佩弦"}, {"kind": "mc", "sec": "的地得", "q": "「輕快地削」的「地」用來修飾？", "opts": ["名詞", "動詞", "數詞", "量詞"], "ans": 1, "hint": "地→修飾動詞"}, {"kind": "mc", "sec": "《壽大姊五十序》", "q": "袁中道與兄宗道、宏道合稱？", "opts": ["三蘇", "三袁", "三曹", "三李"], "ans": 1, "hint": "公安派"}, {"kind": "tf", "sec": "反語", "q": "反語是表面意思與實際意思相反。", "ans": true, "hint": ""}], [{"kind": "mc", "sec": "《背影》", "q": "《背影》中最詳、最動情的場面是？", "opts": ["變賣典質", "父親攀月台買橘", "在北京讀書", "寫家書格式"], "ans": 1, "hint": "關鍵細節"}, {"kind": "mc", "sec": "反語", "q": "「那時真是太聰明了」實際意思是？", "opts": ["自己很聰明", "自己太愚蠢，不明白父愛", "父親很聰明", "讚美自己答題快"], "ans": 1, "hint": "反語"}, {"kind": "input", "sec": "的地得", "q": "「炒____香噴噴」應填「的／地／得」中的____。", "ans": "得", "accept": ["得"], "hint": "得連接補語"}, {"kind": "mc", "sec": "《年夜飯》", "q": "文中用大鯪魚，取意是？", "opts": ["年年有餘", "步步高升", "招財進寶", "長命百歲"], "ans": 0, "hint": "習俗"}, {"kind": "tf", "sec": "《寒冬小吃》", "q": "《寒冬小吃》中買熱蔗的情節發生在香港寒夜。", "ans": true, "hint": ""}], [{"kind": "mc", "sec": "《背影》落淚", "q": "下列哪項不是課後要求找出的四次落淚之一？", "opts": ["奔喪時", "望見攀爬買橘的背影", "在徐州第一次見到父親時大笑", "讀父親來信時"], "ans": 2, "hint": "四次：奔喪、望背影、人羣消失、讀信"}, {"kind": "mc", "sec": "虛詞「以」", "q": "「謝以一豚」的「以」是？", "opts": ["連詞「來」", "介詞「用／拿」", "語氣助詞", "代詞"], "ans": 1, "hint": "拿一頭豬酬謝"}, {"kind": "input", "sec": "年齡稱謂", "q": "女子約十五歲稱____。", "ans": "及笄", "accept": ["及笄"], "hint": "古代年齡稱謂"}, {"kind": "mc", "sec": "壽序", "q": "「壽序」是甚麼文體？", "opts": ["墓誌銘", "祝壽文體", "奏章", "傳奇小說"], "ans": 1, "hint": "明清盛行"}]]}, {"id": "u4", "titleZh": "單元四　詩國古今遊", "titleEn": "詩歌欣賞", "emoji": "🪶", "levels": [[{"kind": "mc", "sec": "近體詩", "q": "絕句一共有幾句？", "opts": ["兩句", "四句", "八句", "不限"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "律詩", "q": "律詩一共有幾句？", "opts": ["四句", "六句", "八句", "十二句"], "ans": 2, "hint": "首頷頸尾四聯"}, {"kind": "input", "sec": "《燕詩》", "q": "《燕詩》的作者是____。", "ans": "白居易", "accept": ["白居易", "白樂天"], "hint": "字樂天"}, {"kind": "mc", "sec": "擬聲詞", "q": "下列哪個是擬聲詞？", "opts": ["美麗", "喃喃", "快樂", "遠方"], "ans": 1, "hint": "模擬聲音"}, {"kind": "tf", "sec": "對偶", "q": "律詩的頷聯和頸聯必須對偶。", "ans": true, "hint": ""}], [{"kind": "mc", "sec": "《燕詩》", "q": "雛燕羽翼一成後怎樣？", "opts": ["留下反哺", "四散飛走不回顧", "跟著父母遷徙到南海", "馬上築新巢"], "ans": 1, "hint": "勸人盡孝"}, {"kind": "mc", "sec": "《慈烏夜啼》", "q": "作者把慈烏比作鳥中的？", "opts": ["吳起", "曾參", "孔子", "莊子"], "ans": 1, "hint": "以孝著稱"}, {"kind": "input", "sec": "《鳥鳴澗》", "q": "《鳥鳴澗》的體裁是五言____。", "ans": "絕句", "accept": ["絕句", "絕詩"], "hint": "四句每句五字"}, {"kind": "mc", "sec": "《送友人》", "q": "「浮雲遊子意，落日故人情」是律詩的？", "opts": ["首聯", "頷聯", "頸聯", "尾聯"], "ans": 2, "hint": "對偶聯"}, {"kind": "tf", "sec": "名句出處", "q": "「海內存知己，天涯若比鄰」出自李白《送友人》。", "ans": false, "hint": "出自王勃《送杜少府之任蜀州》"}], [{"kind": "mc", "sec": "《鳥鳴澗》", "q": "結合「以動襯靜」，「春山空」的「空」較合適解作？", "opts": ["貧窮", "甚麼都沒有", "廣闊無礙／空寂寧靜", "不實際"], "ans": 2, "hint": "花落鳥鳴反而顯靜"}, {"kind": "mc", "sec": "《迢迢牽牛星》", "q": "織女「終日不成章」主要因為？", "opts": ["不會織布", "泣涕如雨、思念難安", "沒有機杼", "河漢太深"], "ans": 1, "hint": "相思"}, {"kind": "input", "sec": "《送友人》", "q": "「蕭蕭班馬鳴」的「班馬」指____的馬。", "ans": "離羣", "accept": ["離羣", "離群", "離羣的", "離別"], "hint": "不是斑馬"}, {"kind": "mc", "sec": "諷諭詩", "q": "白居易的諷諭詩主要是？", "opts": ["一種近體格律名稱", "依內容分類，用典型事件勸誡", "只寫山水", "必須八句對偶"], "ans": 1, "hint": "與格律無關"}]]}, {"id": "u5", "titleZh": "單元五　以物為喻", "titleEn": "文言選讀（一）", "emoji": "🐱", "levels": [[{"kind": "mc", "sec": "《莊子》", "q": "莊子是先秦哪一家的代表？", "opts": ["儒家", "法家", "道家", "墨家"], "ans": 2, "hint": ""}, {"kind": "mc", "sec": "《鴟得腐鼠》", "q": "惠子害怕莊子來代他為相，在城中搜了多久？", "opts": ["一天一夜", "三日三夜", "一個月", "一年"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "比喻", "q": "文中「腐鼠」比喻____。", "ans": "相位", "accept": ["相位", "梁國相位", "梁相", "相位（梁國）"], "hint": "不是喻莊子"}, {"kind": "mc", "sec": "《貓捕雀》", "q": "《貓捕雀》的作者是？", "opts": ["莊子", "薛福成", "羅貫中", "白居易"], "ans": 1, "hint": "清末"}, {"kind": "tf", "sec": "篇章結構", "q": "《貓捕雀》第3段主要是說理。", "ans": true, "hint": "敍事→抒情→說理"}], [{"kind": "mc", "sec": "比喻對應", "q": "鵷鶵比喻誰？", "opts": ["惠子", "莊子", "梁惠王", "鴟"], "ans": 1, "hint": "志向高潔"}, {"kind": "mc", "sec": "虛詞「於」", "q": "「發於南海」的「於」解作？", "opts": ["到", "從", "比", "被"], "ans": 1, "hint": "與「飛於北海」的「到」不同"}, {"kind": "input", "sec": "鵷鶵", "q": "鵷鶵非____不止（棲息）。", "ans": "梧桐", "accept": ["梧桐"], "hint": "三不之一"}, {"kind": "mc", "sec": "《貓捕雀》", "q": "雛雀對貓的態度可用哪組詞形容？", "opts": ["懦弱、逃跑", "勇敢、孝順", "陰險、兇殘", "冷漠、旁觀"], "ans": 1, "hint": "課後形象方向"}, {"kind": "tf", "sec": "思想", "q": "莊子屬於法家思想家。", "ans": false, "hint": "道家"}], [{"kind": "mc", "sec": "「嚇」", "q": "鴟「嚇」一聲，後來「嚇我」的用法是？", "opts": ["始終只是擬聲", "先擬聲，再作動詞「嚇唬」", "只是名詞", "語氣助詞"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "虛詞「之」", "q": "「心之所向」一類的「之」常怎樣處理？", "opts": ["一律譯「的」", "補湊音節，不譯", "一律譯「他」", "刪去整句"], "ans": 1, "hint": "三種用法之一"}, {"kind": "input", "sec": "說理", "q": "《貓捕雀》批評「殘民以____」的人。", "ans": "自肥", "accept": ["自肥"], "hint": "憑權位害民"}, {"kind": "mc", "sec": "文化框", "q": "下列哪個故事不在《鴟得腐鼠》正文內？", "opts": ["惠子搜國", "鵷鶵與腐鼠", "井底之蛙", "莊子見惠子"], "ans": 2, "hint": "井底之蛙在同頁資料框"}]]}], "BASICS": [{"id": "b-dedide", "title": "的／地／得", "emoji": "✏️", "blurb": "結構助詞用法分辨", "questions": [{"kind": "mc", "sec": "的地得", "q": "「肥胖的身子」的「的」修飾？", "opts": ["動詞", "名詞", "副詞", "歎詞"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "的地得", "q": "「努力地學習」應選哪個結構助詞？", "opts": ["的", "地", "得", "地／得皆可無差別"], "ans": 1, "hint": "地修飾動詞"}, {"kind": "input", "sec": "的地得", "q": "「長____漂亮」病句應改為填____。", "ans": "得", "accept": ["得"], "hint": "得接補語"}, {"kind": "mc", "sec": "的地得", "q": "「談的很高興」錯在哪裡？", "opts": ["應用「得」", "應用「地」", "不用助詞", "應用頓號"], "ans": 0, "hint": ""}, {"kind": "tf", "sec": "的地得", "q": "「的」主要放在動詞後連接補語。", "ans": false, "hint": "那是「得」的功能"}, {"kind": "mc", "sec": "的地得", "q": "「炒得香噴噴」的「得」作用是？", "opts": ["修飾名詞", "連接補語", "表示並列", "表示疑問"], "ans": 1, "hint": ""}]}, {"id": "b-tone", "title": "語氣（疑問／祈使／陳述／感歎）", "emoji": "💬", "blurb": "語氣助詞與句類", "questions": [{"kind": "mc", "sec": "語氣", "q": "「日子過得真快啊！」屬哪種語氣？", "opts": ["陳述", "疑問", "祈使", "感歎"], "ans": 3, "hint": ""}, {"kind": "mc", "sec": "語氣", "q": "「爸爸，你走吧。」主要是？", "opts": ["疑問", "祈使", "感歎", "判斷"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "語氣", "q": "「難道還不能料理自己麼？」屬？", "opts": ["陳述", "疑問（含反問）", "祈使", "感歎"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "語氣助詞", "q": "陳述語氣常用助詞如：的、了、呢、罷了、____。", "ans": "嘛", "accept": ["嘛"], "hint": "課本列舉"}, {"kind": "tf", "sec": "語氣", "q": "「了」「呢」「吧」只固定屬一種語氣，絕不會跨類。", "ans": false, "hint": "要看語氣不是只看字形"}, {"kind": "mc", "sec": "歎號", "q": "感情特別強烈的陳述句句末可用？", "opts": ["頓號", "歎號", "分號", "書名號"], "ans": 1, "hint": ""}]}, {"id": "b-measure", "title": "量詞", "emoji": "🔢", "blurb": "數詞後的量詞", "questions": [{"kind": "mc", "sec": "量詞", "q": "量詞多用在？", "opts": ["句首嘆詞後", "數詞後", "只能單獨成句", "韻腳位置"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "量詞", "q": "一____魚（條／件／陣）。", "ans": "條", "accept": ["條"], "hint": ""}, {"kind": "mc", "sec": "量詞", "q": "「一陣風」的「陣」是？", "opts": ["名詞", "量詞", "動詞", "介詞"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "量詞", "q": "一____心事（宗／條／撮）。", "ans": "宗", "accept": ["宗"], "hint": "課本量詞例"}, {"kind": "tf", "sec": "數詞", "q": "「第一」「初四」屬序數。", "ans": true, "hint": ""}, {"kind": "mc", "sec": "量詞", "q": "「一小撮黃毛」的「撮」是？", "opts": ["動詞", "量詞", "副詞", "連詞"], "ans": 1, "hint": "《年夜飯》相關"}]}, {"id": "b-irony", "title": "反語", "emoji": "🔄", "blurb": "正話反說／反話正說", "questions": [{"kind": "mc", "sec": "反語", "q": "反語的特點是？", "opts": ["表面與實際意思相同", "表面與實際意思相反", "只能用於詩歌", "必須用問號"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "《背影》", "q": "「太聰明了」在《背影》中屬反語，實際指？", "opts": ["智力超羣", "太愚蠢", "父親精明", "店員聰明"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "反語用途", "q": "反語可以用來？", "opts": ["只能說明文定義", "諷刺、憤慨或幽默", "代替所有成語", "取消標點"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "反語", "q": "舒巷城《噪音篇》被迫「享受」噪音，實際是____。", "ans": "忍受", "accept": ["忍受", "被迫忍受"], "hint": ""}, {"kind": "tf", "sec": "反語", "q": "反語一定含惡意，絕不可幽默。", "ans": false, "hint": "也可以幽默"}, {"kind": "mc", "sec": "《背影》", "q": "作者笑父親「迂」，「迂」指？", "opts": ["很現代化", "守舊、不合世情", "跑得快", "聲音大"], "ans": 1, "hint": ""}]}, {"id": "b-rhetoric", "title": "擬聲詞／疊字／對偶", "emoji": "🎵", "blurb": "單元四語文基礎（4.47）", "questions": [{"kind": "mc", "sec": "擬聲", "q": "「啁啾」模擬的是？", "opts": ["馬蹄聲", "鳥雀悲鳴／鳴聲", "織布聲", "開門聲"], "ans": 1, "hint": "《燕詩》"}, {"kind": "mc", "sec": "疊字", "q": "下列哪個是疊字但不是擬聲？", "opts": ["啞啞", "札札", "盈盈", "蕭蕭"], "ans": 2, "hint": "盈盈寫水清澈等"}, {"kind": "mc", "sec": "對偶", "q": "「青山橫北郭，白水繞東城」是？", "opts": ["設問", "對偶", "反語", "誇飾"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "擬聲", "q": "《慈烏夜啼》中慈烏哀鳴的擬聲詞是____。", "ans": "啞啞", "accept": ["啞啞"], "hint": ""}, {"kind": "tf", "sec": "疊字", "q": "所有疊字都一定是擬聲詞。", "ans": false, "hint": "翩翩、盈盈等不是模擬聲音"}, {"kind": "mc", "sec": "對偶", "q": "對偶要求兩句？", "opts": ["字數相等、結構相同、意義相關", "必須押仄聲韻", "只能用於新詩", "不可出現名詞"], "ans": 0, "hint": ""}, {"kind": "mc", "sec": "AABB", "q": "「斷斷續續」屬哪種疊字形式？", "opts": ["AA", "ABB", "AABB", "ABAB"], "ans": 2, "hint": ""}]}, {"id": "b-punct", "title": "標點", "emoji": "⭕", "blurb": "頓號、逗號、分號、冒號、引號等", "questions": [{"kind": "mc", "sec": "頓號", "q": "頓號主要用於？", "opts": ["句末陳述完結", "並列詞語或短語之間", "引出話語", "書名"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "分號", "q": "「父親還了虧空；又借錢辦了喪事。」分號分開的是？", "opts": ["單詞字母", "複句中並列相關分句", "段落標題", "注音"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "冒號", "q": "稱謂後（如書信開頭）常用？", "opts": ["頓號", "冒號", "書名號", "刪節號"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "句號", "q": "陳述句完結的停頓用____號。", "ans": "句", "accept": ["句", "句號", "。"], "hint": ""}, {"kind": "tf", "sec": "引號", "q": "引號只可用於對話，不可表示特殊含義。", "ans": false, "hint": "引號有四用"}, {"kind": "mc", "sec": "引號", "q": "用引號標「高等華人」而帶諷刺，屬於引號的？", "opts": ["只標書名", "特殊含義", "只表聲音", "代替句號"], "ans": 1, "hint": ""}]}, {"id": "b-pos", "title": "詞類（名／動／形／副）", "emoji": "📚", "blurb": "詞類基本分辨", "questions": [{"kind": "mc", "sec": "名詞", "q": "「明天」「冬季」屬名詞中的？", "opts": ["方位", "時間", "抽象事物", "動詞"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "動詞", "q": "「希望」「感到」屬動詞中的？", "opts": ["判斷", "心理活動", "趨向", "使令"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "形容詞", "q": "「誠實」「愉快」主要是？", "opts": ["副詞", "形容詞", "介詞", "量詞"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "副詞", "q": "「很、太、更、最」屬____副詞。", "ans": "程度", "accept": ["程度"], "hint": ""}, {"kind": "tf", "sec": "副詞", "q": "副詞主要修飾動詞或形容詞。", "ans": true, "hint": ""}, {"kind": "mc", "sec": "分辨", "q": "「高」與「很高」中，「高」是形容詞，「很」是？", "opts": ["名詞", "動詞", "副詞", "量詞"], "ans": 2, "hint": ""}]}, {"id": "b-xuci", "title": "文言虛詞「之」「於」", "emoji": "🀄", "blurb": "跨單元虛詞", "questions": [{"kind": "mc", "sec": "之", "q": "「愛修之才」的「之」是？", "opts": ["代詞", "結構助詞「的」", "補湊不譯", "疑問副詞"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "之", "q": "「因就斫之」的「之」指？", "opts": ["張助", "李樹", "曹操", "桑樹皮"], "ans": 1, "hint": "代詞"}, {"kind": "mc", "sec": "於", "q": "「飛於北海」的「於」解作？", "opts": ["從", "到", "比", "被"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "於", "q": "「發於南海」的「於」解作____。", "ans": "從", "accept": ["從"], "hint": ""}, {"kind": "tf", "sec": "之", "q": "「之」只有「的」一種用法。", "ans": false, "hint": "還有代詞、補湊音節等"}, {"kind": "mc", "sec": "之", "q": "補湊音節、不譯的「之」例如？", "opts": ["愛修之才", "心之所向一類", "斬之（殺他）", "謝以一豚"], "ans": 1, "hint": ""}]}, {"id": "b-chengyu", "title": "成語運用", "emoji": "🎋", "blurb": "成語意義與運用", "questions": [{"kind": "mc", "sec": "成語", "q": "成語多為？", "opts": ["隨意自造的長句", "長期慣用、簡潔精闢的定型詞組", "只有兩個字", "不可有出處"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "身體力行", "q": "「身體力行」在《平民總統孫中山》語境強調？", "opts": ["只說不做", "親身實踐自己所說", "身體有病", "拒絕會見"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "親情成語", "q": "形容父母疼愛子女可用「____情深」（舐犢）。", "ans": "舐犢", "accept": ["舐犢", "舐犢情深"], "hint": "不是寸草春暉"}, {"kind": "mc", "sec": "燕詩聯想", "q": "形容子女難報親恩，常用？", "opts": ["過眼雲煙", "寸草春暉", "天馬行空", "才高八斗"], "ans": 1, "hint": ""}, {"kind": "tf", "sec": "成語", "q": "成語一般有出處，多為四字。", "ans": true, "hint": ""}, {"kind": "mc", "sec": "文化", "q": "「通宵達旦」中保留的古義與？", "opts": ["只指中午", "整夜到天亮", "只指一小時", "只指冬天"], "ans": 1, "hint": "《岳飛》相關成語例"}]}], "READINGS": [{"id": "r-yan", "title": "《燕詩》", "author": "白居易", "emoji": "🕊️", "kind": "文言古體詩", "note": "全首背誦 · 公開領域", "passage": "梁上有雙燕，翩翩雄與雌。\n銜泥兩椽間，一巢生四兒。\n四兒日夜長，索食聲孜孜。\n青蟲不易捕，黃口無飽期。\n嘴爪雖欲敝，心力不知疲。\n須臾十來往，猶恐巢中飢。\n辛勤三十日，母瘦雛漸肥。\n喃喃教言語，一一刷毛衣。\n一旦羽翼成，引上庭樹枝。\n舉翅不回顧，隨風四散飛。\n雌雄空中鳴，聲盡呼不歸。\n卻入空巢裏，啁啾終夜悲。\n燕燕爾勿悲，爾當返自思。\n思爾為雛日，高飛背母時。\n當時父母念，今日爾應知。", "questions": [{"kind": "mc", "sec": "作者", "q": "本詩作者是？", "opts": ["李白", "杜甫", "白居易", "王維"], "ans": 2, "hint": ""}, {"kind": "mc", "sec": "情節", "q": "母燕辛勤哺育約多少日後母瘦雛肥？", "opts": ["三日", "十日", "三十日", "一年"], "ans": 2, "hint": ""}, {"kind": "mc", "sec": "擬聲", "q": "詩中「孜孜」「喃喃」「啁啾」都是？", "opts": ["反語", "擬聲詞", "對偶句", "量詞"], "ans": 1, "hint": ""}, {"kind": "tf", "sec": "情節", "q": "雛燕長大後仍長留巢中反哺雙親。", "ans": false, "hint": "四散飛走，不回顧"}, {"kind": "mc", "sec": "主旨", "q": "第2段（「燕燕爾勿悲」起）主要作用是？", "opts": ["繼續描寫築巢細節", "勸誡、點明盡孝體諒父母", "寫燕子遷徙路線", "介紹唐詩格律"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "詞義", "q": "「須臾」的意思是____的時間。", "ans": "很短", "accept": ["很短", "片刻", "短", "極短", "很短的"], "hint": ""}, {"kind": "mc", "sec": "主旨", "q": "本詩借燕寫人，主要勸人？", "opts": ["爭取功名", "盡孝、體諒父母", "遠遊四方", "學習對偶"], "ans": 1, "hint": ""}]}, {"id": "r-ciwu", "title": "《慈烏夜啼》", "author": "白居易", "emoji": "🐦‍⬛", "kind": "文言古體詩", "note": "全首背誦 · 公開領域", "passage": "慈烏失其母，啞啞吐哀音。\n晝夜不飛去，經年守故林。\n夜夜夜半啼，聞者為沾襟。\n聲中如告訴，未盡反哺心。\n百鳥豈無母，爾獨哀怨深。\n應是母慈太重，使爾悲不任。\n昔有吳起者，母歿喪不臨。\n嗟哉斯徒輩，其心不如禽。\n慈烏復慈烏，鳥中之曾參。", "questions": [{"kind": "mc", "sec": "反哺", "q": "「反哺」比喻？", "opts": ["子女奉養父母", "父母遺棄子女", "朋友互相幫助", "師生問答"], "ans": 0, "hint": ""}, {"kind": "input", "sec": "擬聲", "q": "詩中慈烏哀鳴的擬聲詞是____。", "ans": "啞啞", "accept": ["啞啞"], "hint": ""}, {"kind": "mc", "sec": "反例", "q": "詩中不孝的反例是誰？", "opts": ["曾參", "吳起", "孔子", "莊子"], "ans": 1, "hint": "母歿喪不臨"}, {"kind": "mc", "sec": "比喻", "q": "作者把慈烏比作鳥中的？", "opts": ["吳起", "曾參", "惠子", "岳飛"], "ans": 1, "hint": ""}, {"kind": "tf", "sec": "主旨", "q": "本詩讚孝、諷不孝，勸世人盡孝。", "ans": true, "hint": ""}, {"kind": "mc", "sec": "詞義", "q": "「沾襟」意思接近？", "opts": ["衣襟乾燥", "淚濕衣襟", "整理羽毛", "飛離樹林"], "ans": 1, "hint": ""}]}, {"id": "r-niao", "title": "《鳥鳴澗》", "author": "王維", "emoji": "🌙", "kind": "五言絕句", "note": "公開領域", "passage": "人閒桂花落，夜靜春山空。\n月出驚山鳥，時鳴春澗中。", "questions": [{"kind": "mc", "sec": "體裁", "q": "本詩體裁是？", "opts": ["七言律詩", "五言絕句", "詞", "新詩"], "ans": 1, "hint": "四句，每句五字"}, {"kind": "mc", "sec": "作者", "q": "王維人稱？", "opts": ["詩仙", "詩聖", "詩佛", "詩鬼"], "ans": 2, "hint": ""}, {"kind": "mc", "sec": "手法", "q": "「月出驚山鳥，時鳴春澗中」主要是？", "opts": ["以動襯靜", "反語", "誇飾數字", "設問"], "ans": 0, "hint": ""}, {"kind": "mc", "sec": "「空」", "q": "結合詩境，「春山空」的「空」較宜解作？", "opts": ["貧窮", "廣闊無礙／空寂", "完全沒有山", "不誠實"], "ans": 1, "hint": ""}, {"kind": "tf", "sec": "感官", "q": "詩中同時寫到視覺與聽覺意象（花落、月、鳥鳴）。", "ans": true, "hint": ""}, {"kind": "input", "sec": "心境", "q": "「人閒」點出詩人____的心境。", "ans": "閒適", "accept": ["閒適", "悠閒", "閒"], "hint": ""}]}, {"id": "r-song", "title": "《送友人》", "author": "李白", "emoji": "🐴", "kind": "五言律詩", "note": "公開領域", "passage": "青山橫北郭，白水繞東城。\n此地一為別，孤蓬萬里征。\n浮雲遊子意，落日故人情。\n揮手自茲去，蕭蕭班馬鳴。", "questions": [{"kind": "mc", "sec": "體裁", "q": "本詩是？", "opts": ["絕句", "律詩", "樂府長篇", "詞"], "ans": 1, "hint": "八句"}, {"kind": "mc", "sec": "對偶", "q": "「青山橫北郭，白水繞東城」是？", "opts": ["尾聯", "首聯（對偶）", "題目", "註解"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "意象", "q": "「孤蓬」主要比喻？", "opts": ["富裕安穩", "漂泊無定", "朝廷高官", "春天花卉"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "頸聯", "q": "「浮雲」常喻遊子心意；「落日」喻？", "opts": ["憤怒絕交", "故人依依之情", "戰爭勝利", "科舉成名"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "班馬", "q": "「班馬」指____的馬。", "ans": "離羣", "accept": ["離羣", "離群", "離別"], "hint": "不是斑馬"}, {"kind": "tf", "sec": "感情", "q": "本詩寫離別愁緒，與王勃「海內存知己」那種互勉豪情不完全相同。", "ans": true, "hint": ""}, {"kind": "mc", "sec": "擬聲", "q": "「蕭蕭」是？", "opts": ["量詞", "擬聲詞（馬鳴）", "地名", "官名"], "ans": 1, "hint": ""}]}, {"id": "r-chi", "title": "《鴟得腐鼠》", "author": "《莊子·秋水》", "emoji": "🦅", "kind": "文言寓言", "note": "公開領域", "passage": "惠子相梁，莊子往見之。或謂惠子曰：「莊子來，欲代子相。」於是惠子恐，搜於國中三日三夜。莊子往見之，曰：「南方有鳥，其名為鵷鶵，子知之乎？夫鵷鶵發於南海而飛於北海，非梧桐不止，非練實不食，非醴泉不飲。於是鴟得腐鼠，鵷鶵過之，仰而視之曰：『嚇！』今子欲以子之梁國而嚇我邪？」", "questions": [{"kind": "mc", "sec": "比喻", "q": "鵷鶵喻？", "opts": ["惠子", "莊子", "腐鼠", "梁惠王"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "比喻", "q": "鴟喻？", "opts": ["莊子", "惠子", "梧桐", "醴泉"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "比喻", "q": "腐鼠喻____。", "ans": "相位", "accept": ["相位", "梁國相位", "梁相"], "hint": ""}, {"kind": "mc", "sec": "虛詞", "q": "「發於南海」與「飛於北海」兩個「於」分別近於？", "opts": ["都是「從」", "從；到", "到；從", "都是「被」"], "ans": 1, "hint": ""}, {"kind": "tf", "sec": "情節", "q": "惠子在城中搜了三日三夜。", "ans": true, "hint": ""}, {"kind": "mc", "sec": "主旨", "q": "莊子講這個故事，主要想表達？", "opts": ["他真想搶相位", "相位於他如腐鼠，諷惠子猜忌", "教人養鴟", "介紹梁國地理"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "詞義", "q": "「非梧桐不止」的「止」指？", "opts": ["停止呼吸", "棲息／停下", "死亡", "做宰相"], "ans": 1, "hint": ""}]}, {"id": "r-beiying", "title": "《背影》（節引精讀）", "author": "朱自清", "emoji": "🚂", "kind": "現代散文（講讀）", "note": "版權緣故不貼全文；下列為課文要點＋短引，供練習", "passage": "【練習導讀｜非全文】\n朱自清《背影》寫父親到火車站送子北上讀書。文中最詳寫父親攀月台買橘：戴黑布小帽、黑布大馬褂、深青布棉袍，蹣跚走至鐵道邊，攀月台時肥胖身子微傾。\n\n課文短引（節錄）：\n「我看見他戴着黑布小帽，穿着黑布大馬褂，深青布棉袍，蹣跚地走到鐵道邊……」\n「我那時真是太聰明了。」\n「我身體平安，惟膀子疼痛利害……大約大去之期不遠矣。」\n\n請依單元三學習重點作答：四次落淚、買橘、反語、借事抒情。", "questions": [{"kind": "mc", "sec": "作者", "q": "《背影》作者是？", "opts": ["朱自清", "魯迅", "謝雨凝", "馮驥才"], "ans": 0, "hint": ""}, {"kind": "mc", "sec": "場面", "q": "最詳、最動情的場面是？", "opts": ["寫作文", "父親攀月台買橘", "在北京遊玩", "與同學聚會"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "反語", "q": "「太聰明了」實際指？", "opts": ["自己很聰慧", "自己愚蠢、不解父愛", "父親精明能幹", "店員算帳快"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "落淚", "q": "下列哪次屬課文要求找出的落淚？", "opts": ["望見父親攀爬買橘的背影", "考試滿分時", "吃到橘子時大笑", "上車前與朋友告別"], "ans": 0, "hint": "奔喪、望背影、消失於人羣、讀信"}, {"kind": "tf", "sec": "手法", "q": "本文主要借送行買橘等事抒情，而非只空洞呼喊「我愛父親」。", "ans": true, "hint": "借事抒情"}, {"kind": "input", "sec": "書信", "q": "父親信中「大去之期」意思接近____之期。", "ans": "去世", "accept": ["去世", "死亡", "離世", "逝世"], "hint": ""}, {"kind": "mc", "sec": "外貌", "q": "買橘時父親穿著色調給人的感覺較接近？", "opts": ["鮮豔喜慶", "沉重樸素（黑布、深青）", "全白禮服", "運動服裝"], "ans": 1, "hint": ""}]}, {"id": "r-liangjiao", "title": "《兩角錢》練習篇章", "author": "練習篇章（自擬，呼應肖復興課文要旨）", "emoji": "💵", "kind": "現代白話 · 練習篇章", "note": "非課文原文；依閱讀理解篇要旨改寫之自足短文", "passage": "【練習篇章｜非教科書原文】\n有時只是舉手之勞就能幫人，人卻常常熟視無睹。\n\n那天下午，我到郵局寄信，袋裏零錢差兩角。櫃員看着我抽出的百元鈔票，皺眉不願找贖。我正窘着，身旁一個塵土僕僕、瘦小的工地男孩，把兩角硬幣塞到我手心，然後低聲說：「叔叔，先用。」\n\n我破開大鈔辦完手續，回身時，男孩仍在等大人匯款。我沒有把錢還他，只鄭重道了謝。走在街上，我才明白：有時候，伸手幫人，不過是兩角那麼輕；不伸手，卻可以很重。", "questions": [{"kind": "mc", "sec": "中心句", "q": "本文中心句較接近哪一句？", "opts": ["郵局很擠", "舉手之勞卻常熟視無睹", "百元鈔票不好用", "工地很遠"], "ans": 1, "hint": "在開頭"}, {"kind": "mc", "sec": "六要素", "q": "事情發生的地點主要是？", "opts": ["學校禮堂", "郵局", "火車站月台", "棗林"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "情節", "q": "男孩怎樣幫助「我」？", "opts": ["替他寫信", "塞給他兩角零錢", "幫他搬行李", "請他吃飯"], "ans": 1, "hint": ""}, {"kind": "tf", "sec": "情節", "q": "「我」破開鈔票後立刻把兩角還給男孩。", "ans": false, "hint": "改為鄭重道謝"}, {"kind": "mc", "sec": "記敍", "q": "本文記敍次序屬？", "opts": ["倒敍（先寫結果再追述）", "順敍", "只寫議論無敍事", "插敍戰爭史"], "ans": 1, "hint": "欠兩角→男孩解窘→道謝"}, {"kind": "input", "sec": "品德", "q": "本文強調人應有____互助的精神（關懷）。", "ans": "關懷", "accept": ["關懷", "關懷互助", "互助"], "hint": ""}, {"kind": "mc", "sec": "人物", "q": "男孩給人的印象較接近？", "opts": ["有錢任性", "瘦小、塵土僕僕却肯伸手", "郵局櫃員", "冷漠旁觀"], "ans": 1, "hint": ""}]}], "TEST_PAPERS": [{"id": "tp-mid", "title": "上學期統一測驗練習卷", "emoji": "📝", "blurb": "對應測驗範圍：甲部《背影》《燕詩》＋語言文化；乙部白話閱讀；丙部文言《壽大姊五十序》要點", "sectionsMeta": [{"name": "甲部　指定篇章與語言文化", "marks": 12}, {"name": "乙部　白話文閱讀理解", "marks": 10}, {"name": "丙部　文言文閱讀理解", "marks": 8}], "requiredMarks": 30, "bonusMarks": 0, "questions": [{"kind": "mc", "sec": "甲部《背影》", "marks": 1, "noShuffle": true, "q": "《背影》的抒情主線圍繞父親送行，最詳寫的動作是？", "opts": ["在家變賣典質", "攀月台買橘", "寫作文", "遊覽徐州"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "甲部《背影》", "marks": 1, "noShuffle": true, "q": "「我那時真是太聰明了」運用了？", "opts": ["對偶", "反語", "擬聲", "誇飾"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "甲部《背影》", "marks": 1, "noShuffle": true, "q": "下列哪項屬於課文四次落淚之一？", "opts": ["讀父親來信，淚光中再見背影", "考試失敗", "與同學爭吵", "吃橘時開心大笑"], "ans": 0, "hint": ""}, {"kind": "mc", "sec": "甲部《燕詩》", "marks": 1, "noShuffle": true, "q": "《燕詩》中雛燕羽翼長成後？", "opts": ["反哺雙親", "舉翅不回顧，四散飛走", "與母同遷南海", "立刻築更大的巢"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "甲部《燕詩》", "marks": 1, "q": "詩中模擬燕語教言語的擬聲詞是____。", "ans": "喃喃", "accept": ["喃喃"], "hint": "三個擬聲之一"}, {"kind": "mc", "sec": "甲部《燕詩》", "marks": 1, "noShuffle": true, "q": "本詩主旨接近？", "opts": ["勸人盡孝、體諒父母", "描寫戰爭", "介紹科舉", "諷刺官吏貪污為主"], "ans": 0, "hint": ""}, {"kind": "mc", "sec": "甲部修辭", "marks": 1, "noShuffle": true, "q": "「青山橫北郭，白水繞東城」是？", "opts": ["反語", "對偶", "設問", "借代"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "甲部修辭", "marks": 1, "noShuffle": true, "q": "「啞啞」「蕭蕭」「札札」同屬？", "opts": ["量詞", "擬聲詞", "語氣助詞", "連詞"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "甲部疊字", "marks": 1, "noShuffle": true, "q": "下列何者是疊字但通常不視為擬聲？", "opts": ["唧唧", "濺濺", "脈脈", "啾啾"], "ans": 2, "hint": "脈脈＝凝望"}, {"kind": "input", "sec": "甲部成語", "marks": 1, "q": "孫中山說到做到，可用成語「身體____」形容。", "ans": "力行", "accept": ["力行", "身體力行"], "hint": ""}, {"kind": "mc", "sec": "甲部成語", "marks": 1, "noShuffle": true, "q": "形容父母疼愛子女，較合適的是？", "opts": ["過眼雲煙", "舐犢情深", "天馬行空", "杯水車薪"], "ans": 1, "hint": ""}, {"kind": "tf", "sec": "甲部《背影》", "marks": 1, "q": "《背影》以借事抒情為主，詳寫送行而略寫部分背景。", "ans": true, "hint": ""}, {"kind": "mc", "sec": "乙部閱讀", "marks": 2, "noShuffle": true, "q": "【乙部短文】媽媽把一張舊油紙傘掛在門後。雨季來時，她總說：「記得帶傘。」多年後我在颱風夜想起這句話，才懂那把傘撐住的不只是雨。\n上文「傘」主要象徵？", "opts": ["純粹天氣工具，毫無感情", "母親的照料與牽掛", "考試成績", "旅行地圖"], "ans": 1, "hint": "呼應親情傘一類意象"}, {"kind": "mc", "sec": "乙部閱讀", "marks": 2, "noShuffle": true, "q": "同上短文，寫作手法較接近？", "opts": ["借事／借物抒情", "純說明文定義", "只列實驗步驟", "法庭辯論稿"], "ans": 0, "hint": ""}, {"kind": "tf", "sec": "乙部閱讀", "marks": 1, "q": "同上短文：兒子多年後才更深體會母親的叮囑。", "ans": true, "hint": ""}, {"kind": "mc", "sec": "乙部閱讀", "marks": 2, "noShuffle": true, "q": "若為上文補「記敍要素」，「門後掛傘／雨季叮囑」屬於？", "opts": ["與文意無關的議論", "事件中的重要細節", "韻腳分析", "虛詞解釋"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "乙部閱讀", "marks": 1, "q": "同上短文感情基調可用二字概括：____（例如：思念）。", "ans": "思念", "accept": ["思念", "感念", "懷念", "感恩", "感激", "溫暖"], "hint": "親情"}, {"kind": "mc", "sec": "乙部閱讀", "marks": 2, "noShuffle": true, "q": "「記得帶傘」在文中屬於？", "opts": ["無意義口頭禪", "母親關懷的話語細節", "天氣預報術語定義", "數學公式"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "丙部《壽大姊五十序》", "marks": 1, "noShuffle": true, "q": "「壽序」是？", "opts": ["戰爭檄文", "祝壽文體", "地圖說明", "樂府曲牌"], "ans": 1, "hint": ""}, {"kind": "mc", "sec": "丙部《壽大姊五十序》", "marks": 1, "noShuffle": true, "q": "袁中道與兩兄合稱「三袁」，屬？", "opts": ["公安派", "江西詩派", "桐城派", "花間派"], "ans": 0, "hint": ""}, {"kind": "mc", "sec": "丙部《壽大姊五十序》", "marks": 2, "noShuffle": true, "q": "文中離別關鍵細節是？", "opts": ["姊在馬上、風吹練袖，囑弟好讀書", "一同考科舉", "一起出海", "同上戰場"], "ans": 0, "hint": ""}, {"kind": "mc", "sec": "丙部《壽大姊五十序》", "marks": 1, "noShuffle": true, "q": "寒夜聚談時，誰講故事嚇弟妹？", "opts": ["姊姊", "伯修", "老師", "舅父"], "ans": 1, "hint": ""}, {"kind": "input", "sec": "丙部虛詞", "marks": 1, "q": "「謝以一豚」的「以」作介詞，可解作____／拿。", "ans": "用", "accept": ["用", "拿", "用／拿"], "hint": ""}, {"kind": "tf", "sec": "丙部", "marks": 1, "q": "公安派主張寫自己的想法，反對一味復古模擬。", "ans": true, "hint": ""}, {"kind": "mc", "sec": "丙部年齡", "marks": 1, "noShuffle": true, "q": "「及笄」大約指女子？", "opts": ["約十五歲", "約五十歲", "約兩歲", "約八十歲"], "ans": 0, "hint": ""}]}]};
+
+const GAME_ID = "s1-chi-lang-quiz";
+const STORE_KEY = "s1ChiLangQuiz_v1";
+const GATE_KEY = "s1-chi-lang-gate";
+const GATE_CODE = String.fromCharCode(49,54,56,49); /* 1681 */
+const CHAPTERS = DATA.CHAPTERS;
+const BASICS = DATA.BASICS;
+const READINGS = DATA.READINGS;
+const TEST_PAPERS = DATA.TEST_PAPERS;
+
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function norm(s){
+  return String(s||"").trim().toLowerCase()
+    .replace(/[\s\u3000]+/g,"")
+    .replace(/[\u3002\uFF0E\uFF0C,\u3001\uFF01!\uFF1F?\uFF1A:\uFF1B;\uFF08\uFF09()\u300C\u300D\u300E\u300F\u300A\u300B\u3008\u3009"'']/g,"");
+}
+function matchInput(raw, item){
+  const n = norm(raw);
+  if(!n) return false;
+  const list = [item.ans].concat(item.accept||[]);
+  return list.some(a => {
+    const na = norm(a);
+    return na === n || na.includes(n) || n.includes(na);
+  });
+}
+function correctText(item){
+  if(item.kind==="tf") return item.ans ? "正確" : "錯誤";
+  if(item.kind==="mc") return (item.opts&&item.opts[item.ans]!=null)?item.opts[item.ans]:String(item.ans);
+  return item.ans;
+}
+function kindLabel(item){
+  if(item.kind==="mc") return "選擇";
+  if(item.kind==="tf") return "是非";
+  if(item.kind==="input") return "填充";
+  return item.kind||"";
+}
+function itemMarks(item){ return (item.marks!=null?item.marks:1); }
+function countChapter(ch){ return ch.levels.reduce((a,lv)=>a+lv.length,0); }
+function countBank(){
+  let n = CHAPTERS.reduce((a,ch)=>a+countChapter(ch),0);
+  n += BASICS.reduce((a,b)=>a+b.questions.length,0);
+  n += READINGS.reduce((a,r)=>a+r.questions.length,0);
+  n += TEST_PAPERS.reduce((a,t)=>a+t.questions.length,0);
+  return n;
+}
+function fmtTime(ms){
+  const s=Math.floor(ms/1000); const m=Math.floor(s/60); const r=s%60;
+  return m+":"+String(r).padStart(2,"0");
+}
+function loadStore(){
+  try{ return JSON.parse(localStorage.getItem(STORE_KEY)||"{}")||{}; }catch(e){ return {}; }
+}
+function saveStore(o){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(o)); }catch(e){}
+}
+function getNick(){ return (loadStore().nick||"").trim(); }
+function setNick(n){
+  const st=loadStore(); st.nick=String(n||"").trim().slice(0,20); saveStore(st);
+  const el=document.getElementById("hudNick");
+  if(el) el.textContent="代號："+(st.nick||"訪客");
+}
+const P5Platform = {
+  report(partial){
+    try{
+      if(window.parent && window.parent!==window){
+        window.parent.postMessage(Object.assign({type:"p5-game-score"}, partial), "*");
+      }
+    }catch(e){}
+  }
+};
+
+let mode = "home";
+let paper=null, qi=0, score=0, bonusScore=0, totalPts=0, bonusPts=0;
+let locked=false, log=[], firstTry=true, curMc=null;
+let startAt=0, elapsedMs=0, timerId=null, curCh=null, curPassage=null;
+
+function stopTimer(){ if(timerId){ clearInterval(timerId); timerId=null; } }
+function startTimer(){
+  stopTimer(); startAt=Date.now();
+  timerId=setInterval(()=>{
+    elapsedMs=Date.now()-startAt;
+    const t=document.getElementById("timerChip");
+    if(t) t.textContent="用時 "+fmtTime(elapsedMs);
+  },400);
+}
+function updateProg(){
+  if(!paper) return;
+  const pct = paper.questions.length? Math.round(qi/paper.questions.length*100):0;
+  const f=document.getElementById("progFill"); if(f) f.style.width=pct+"%";
+  document.getElementById("score").textContent =
+    (paper.mode==="test")
+      ? ("得分 "+score+" / "+totalPts+(bonusPts?(" · 加分 "+bonusScore):""))
+      : ("得分 "+score+" / "+totalPts);
+}
+function celebrate(){
+  const fx=document.getElementById("fx"); if(!fx) return;
+  fx.innerHTML="";
+  const bits=["🧧","✨","🎋","📜","🌟","💮","🎉","🖌️"];
+  for(let i=0;i<18;i++){
+    const d=document.createElement("div"); d.className="bit";
+    d.textContent=bits[i%bits.length];
+    d.style.left=(8+Math.random()*84)+"%";
+    d.style.animationDelay=(Math.random()*0.4)+"s";
+    fx.appendChild(d);
+  }
+  const card=document.getElementById("card");
+  if(card){
+    card.classList.add("celeb");
+    setTimeout(()=>card.classList.remove("celeb"),900);
+    const old=card.querySelector(".praise"); if(old) old.remove();
+    const p=document.createElement("div"); p.className="praise";
+    const words=["好嘢！","靚呀！","繼續！","棒！","Excellent!"];
+    p.innerHTML='<span class="emoji">🧧</span><span class="text">'+words[Math.floor(Math.random()*words.length)]+'</span>';
+    card.appendChild(p);
+    setTimeout(()=>{ try{p.remove();}catch(e){} },1800);
+  }
+}
+function mixMc(item){
+  const labels=item.opts.slice();
+  const correctLabel=labels[item.ans];
+  for(let i=labels.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [labels[i],labels[j]]=[labels[j],labels[i]]; }
+  return { labels, correct: labels.indexOf(correctLabel) };
+}
+function shuffle(arr){
+  const a=arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+function renderHome(){
+  mode="home"; curCh=null; curPassage=null;
+  document.getElementById("hudMode").textContent="模式：主頁";
+  const nick=getNick();
+  document.getElementById("hudNick").textContent="代號："+(nick||"訪客");
+  document.getElementById("hudQ").textContent="題庫："+countBank()+" 題";
+  let html='<div class="hero"><div class="mascot">🏯</div><div><h2>歡迎嚟到中國語文島</h2><p>啟思《中國語文》中一上第五版 · 單元一至五。第一次答對先有分；答錯要改對先至去下一題。完結有分析同正解。</p></div></div>';
+  html+='<div class="nick-box"><label for="nickIn">玩家代號（唔好填真名）</label><input id="nickIn" maxlength="20" placeholder="例如：竹林俠客" value="'+esc(nick)+'"></div>';
+  html+='<div class="mode-grid">';
+  html+='<button type="button" class="mode-card" id="btnChapters"><span class="emo">📚</span><span class="ttl">單元練習</span><div class="meta">單元一至五 · 每單元三關（易→難）</div></button>';
+  html+='<button type="button" class="mode-card" id="btnCombo"><span class="emo">🏆</span><span class="ttl">綜合挑戰</span><div class="meta">混合各單元 · 約 10 題</div></button>';
+  html+='<button type="button" class="mode-card" id="btnTests"><span class="emo">📝</span><span class="ttl">測驗卷</span><div class="meta">甲乙丙部 · 對應測驗範圍</div></button>';
+  html+='<button type="button" class="mode-card" id="btnBasics"><span class="emo">🧩</span><span class="ttl">語文基礎知識</span><div class="meta">的地得 · 語氣 · 修辭 · 虛詞 · 成語</div></button>';
+  html+='<button type="button" class="mode-card" id="btnReading"><span class="emo">📖</span><span class="ttl">閱讀理解</span><div class="meta">獨立篇章 · 完結有分析與正解</div></button>';
+  html+='</div>';
+  const home=document.getElementById("home"); home.innerHTML=html;
+  document.getElementById("nickIn").onchange=e=>setNick(e.target.value);
+  document.getElementById("nickIn").onblur=e=>setNick(e.target.value);
+  document.getElementById("btnChapters").onclick=()=>renderChapterList();
+  document.getElementById("btnCombo").onclick=()=>startCombo();
+  document.getElementById("btnTests").onclick=()=>renderTestList();
+  document.getElementById("btnBasics").onclick=()=>renderBasicsList();
+  document.getElementById("btnReading").onclick=()=>renderReadingList();
+}
+
+function renderChapterList(){
+  document.getElementById("hudMode").textContent="模式：單元練習";
+  let html='<div class="back-row"><button type="button" class="nav" id="backHome">← 返回主頁</button></div>';
+  html+='<div class="hero"><div class="mascot">📜</div><div><h2>單元練習</h2><p>揀一個單元，再揀關卡難度。</p></div></div>';
+  html+='<div class="ch-grid">';
+  CHAPTERS.forEach((ch,idx)=>{
+    html+='<button type="button" class="ch-card" data-i="'+idx+'"><span class="emo">'+ch.emoji+'</span><span class="ttl">'+esc(ch.titleZh)+'</span><div class="en">'+esc(ch.titleEn)+'</div><div class="meta">'+countChapter(ch)+' 題 · 三關</div></button>';
+  });
+  html+='</div>';
+  document.getElementById("home").innerHTML=html;
+  document.getElementById("backHome").onclick=()=>renderHome();
+  document.querySelectorAll(".ch-card").forEach(b=>{
+    b.onclick=()=>{ const i=+b.getAttribute("data-i"); renderLevels(CHAPTERS[i], i); };
+  });
+}
+
+function renderLevels(ch, idx){
+  curCh=ch;
+  document.getElementById("hudMode").textContent="模式："+ch.titleZh;
+  const names=["易","中","難"];
+  let html='<div class="back-row"><button type="button" class="nav" id="backCh">← 返回單元一覽</button></div>';
+  html+='<div class="hero"><div class="mascot">'+ch.emoji+'</div><div><h2>'+esc(ch.titleZh)+'</h2><p>'+esc(ch.titleEn)+'</p></div></div>';
+  html+='<div class="lv-grid">';
+  ch.levels.forEach((lv,li)=>{
+    html+='<button type="button" class="lv-btn" data-l="'+li+'"><div class="ttl">第 '+(li+1)+' 關 · '+names[li]+'</div><div class="meta">'+lv.length+' 題</div></button>';
+  });
+  html+='<button type="button" class="lv-btn" id="btnAll"><div class="ttl">全單元挑戰</div><div class="meta">一次過答晒 '+countChapter(ch)+' 題</div></button>';
+  html+='</div>';
+  document.getElementById("home").innerHTML=html;
+  document.getElementById("backCh").onclick=()=>renderChapterList();
+  document.querySelectorAll(".lv-btn[data-l]").forEach(b=>{
+    b.onclick=()=>startLevel(ch, idx, +b.getAttribute("data-l"));
+  });
+  document.getElementById("btnAll").onclick=()=>startChapterAll(ch, idx);
+}
+
+function startLevel(ch, idx, lv){
+  const qs = ch.levels[lv].map(q=>Object.assign({},q,{_ch:idx+1,_lv:lv+1,_chTitle:ch.titleZh}));
+  beginPaper({ name: ch.titleZh+" · 第"+(lv+1)+"關", en: ch.titleEn, questions: qs, mode: "level", unit: ch.titleZh });
+}
+function startChapterAll(ch, idx){
+  const qs=[];
+  ch.levels.forEach((lv,li)=>lv.forEach(q=>qs.push(Object.assign({},q,{_ch:idx+1,_lv:li+1,_chTitle:ch.titleZh}))));
+  beginPaper({ name: ch.titleZh+" · 全關", en: ch.titleEn, questions: qs, mode: "chapter-all", unit: ch.titleZh });
+}
+function startCombo(){
+  const pool=[];
+  CHAPTERS.forEach((ch,idx)=>{
+    ch.levels.forEach((lv,li)=>lv.forEach(q=>pool.push(Object.assign({},q,{_ch:idx+1,_lv:li+1,_chTitle:ch.titleZh}))));
+  });
+  const qs = shuffle(pool).slice(0,10);
+  beginPaper({ name: "綜合挑戰", en: "Mixed", questions: qs, mode: "combo", unit: "綜合" });
+}
+
+function renderTestList(){
+  document.getElementById("hudMode").textContent="模式：測驗卷";
+  let html='<div class="back-row"><button type="button" class="nav" id="backHome">← 返回主頁</button></div>';
+  html+='<div class="hero"><div class="mascot">📝</div><div><h2>測驗卷</h2><p>跟校內測驗範圍結構：甲部指定篇章＋語言文化；乙部白話閱讀；丙部文言。</p></div></div>';
+  html+='<div class="ch-grid">';
+  TEST_PAPERS.forEach((tp,idx)=>{
+    const marks = tp.questions.reduce((a,q)=>a+itemMarks(q),0);
+    html+='<button type="button" class="ch-card" data-i="'+idx+'"><span class="emo">'+tp.emoji+'</span><span class="ttl">'+esc(tp.title)+'</span><div class="meta">'+esc(tp.blurb)+'</div><ul class="sec-list">';
+    (tp.sectionsMeta||[]).forEach(s=>{ html+='<li>'+esc(s.name)+'（'+s.marks+' 分）</li>'; });
+    html+='</ul><div class="paper-meta">共 '+tp.questions.length+' 題 · 滿分約 '+marks+'</div></button>';
+  });
+  html+='</div>';
+  document.getElementById("home").innerHTML=html;
+  document.getElementById("backHome").onclick=()=>renderHome();
+  document.querySelectorAll(".ch-card").forEach(b=>{
+    b.onclick=()=>startTestPaper(TEST_PAPERS[+b.getAttribute("data-i")]);
+  });
+}
+function startTestPaper(tp){
+  beginPaper({
+    name: tp.title, en: "測驗卷",
+    questions: tp.questions.map(q=>Object.assign({},q)),
+    mode: "test", unit: tp.title, testPaperId: tp.id,
+    requiredMarks: tp.requiredMarks, bonusMarksMax: tp.bonusMarks||0
+  });
+}
+
+function renderBasicsList(){
+  document.getElementById("hudMode").textContent="模式：語文基礎知識";
+  let html='<div class="back-row"><button type="button" class="nav" id="backHome">← 返回主頁</button></div>';
+  html+='<div class="hero"><div class="mascot">🧩</div><div><h2>語文基礎知識</h2><p>揀主題練習；全部為選擇／填充，可自動計分。</p></div></div>';
+  html+='<div class="ch-grid">';
+  BASICS.forEach((b,idx)=>{
+    html+='<button type="button" class="ch-card" data-i="'+idx+'"><span class="emo">'+b.emoji+'</span><span class="ttl">'+esc(b.title)+'</span><div class="meta">'+esc(b.blurb)+' · '+b.questions.length+' 題</div></button>';
+  });
+  html+='</div>';
+  document.getElementById("home").innerHTML=html;
+  document.getElementById("backHome").onclick=()=>renderHome();
+  document.querySelectorAll(".ch-card").forEach(b=>{
+    b.onclick=()=>{
+      const topic=BASICS[+b.getAttribute("data-i")];
+      beginPaper({ name: "基礎 · "+topic.title, en: topic.title, questions: topic.questions.map(q=>Object.assign({},q)), mode: "basics", unit: topic.title, basicsId: topic.id });
+    };
+  });
+}
+
+function renderReadingList(){
+  document.getElementById("hudMode").textContent="模式：閱讀理解";
+  let html='<div class="back-row"><button type="button" class="nav" id="backHome">← 返回主頁</button></div>';
+  html+='<div class="hero"><div class="mascot">📖</div><div><h2>閱讀理解</h2><p>獨立篇章練習。完成後會顯示分數分析同正確答案。</p></div></div>';
+  html+='<div class="ch-grid">';
+  READINGS.forEach((r,idx)=>{
+    html+='<button type="button" class="ch-card" data-i="'+idx+'"><span class="emo">'+r.emoji+'</span><span class="ttl">'+esc(r.title)+'</span><div class="en">'+esc(r.author)+' · '+esc(r.kind)+'</div><div class="meta">'+esc(r.note)+' · '+r.questions.length+' 題</div></button>';
+  });
+  html+='</div>';
+  document.getElementById("home").innerHTML=html;
+  document.getElementById("backHome").onclick=()=>renderHome();
+  document.querySelectorAll(".ch-card").forEach(b=>{
+    b.onclick=()=>startReading(READINGS[+b.getAttribute("data-i")]);
+  });
+}
+function startReading(r){
+  curPassage=r;
+  beginPaper({
+    name: "閱讀 · "+r.title, en: r.author,
+    questions: r.questions.map(q=>Object.assign({},q)),
+    mode: "reading", unit: r.title, readingId: r.id,
+    passage: r.passage, passageNote: r.note
+  });
+}
+
+function beginPaper(p){
+  paper=p; qi=0; score=0; bonusScore=0; log=[]; locked=false; firstTry=true; curMc=null;
+  totalPts = (p.mode==="test")
+    ? (p.requiredMarks!=null?p.requiredMarks:p.questions.filter(q=>!q.bonus).reduce((a,q)=>a+itemMarks(q),0))
+    : p.questions.reduce((a,q)=>a+(q.bonus?0:itemMarks(q)),0) || p.questions.length;
+  bonusPts = (p.mode==="test")
+    ? (p.bonusMarksMax!=null?p.bonusMarksMax:p.questions.filter(q=>q.bonus).reduce((a,q)=>a+itemMarks(q),0))
+    : 0;
+  document.getElementById("panel").classList.add("show");
+  document.getElementById("btnSettle").style.display="inline-block";
+  document.getElementById("hudMode").textContent="作答中："+p.name;
+  startTimer();
+  showQ();
+}
+function closePanel(){
+  stopTimer();
+  document.getElementById("panel").classList.remove("show");
+  paper=null; curPassage=null;
+}
+
+function showQ(){
+  locked=false; firstTry=true;
+  const item=paper.questions[qi];
+  document.getElementById("ptitle").textContent=paper.name+"　"+(qi+1)+"/"+paper.questions.length;
+  document.getElementById("where").textContent=(paper.en?paper.en+" · ":"")+(item._ch?("單元"+item._ch):"")+(item._lv?(" · 第"+item._lv+"關"):"");
+  const kindLab=kindLabel(item);
+  const mk=itemMarks(item);
+  const scoreLine = (paper.mode==="test")
+    ? ("得分 "+score+" / "+totalPts+(bonusPts?(" · 加分 "+bonusScore+" / "+bonusPts):""))
+    : ("合計 "+score+" / "+totalPts);
+  document.getElementById("scoreHint").textContent="【"+(item.sec||"")+" · "+kindLab+(item.bonus?" · 加分題":"")+" · "+mk+" 分】只計第一次答對 · "+scoreLine;
+  updateProg();
+  let qHtml="";
+  if(paper.mode==="reading" && paper.passage){
+    const mh = (qi===0) ? "220px" : "120px";
+    qHtml+='<div class="passage-box" style="max-height:'+mh+'"><strong>篇章</strong>'+(paper.passageNote?("（"+esc(paper.passageNote)+"）"):"")+'\n'+esc(paper.passage)+'</div>';
+  }
+  qHtml+='<div class="task-card"><div class="mission">';
+  if(item.sec) qHtml+='<span class="sec-tag">'+esc(item.sec)+'</span>';
+  qHtml+='<span class="kind-tag">'+kindLab+'</span>';
+  if(item.bonus) qHtml+='<span class="bonus-tag">加分</span>';
+  qHtml+='</div>';
+  qHtml+='<p class="q">'+esc(item.q).replace(/\n/g,'<br>')+'</p></div>';
+  document.getElementById("q").innerHTML=qHtml;
+  document.getElementById("why").textContent="";
+  document.getElementById("next").style.display="none";
+  const box=document.getElementById("opts"); box.innerHTML="";
+  const card=document.getElementById("card"); if(card) card.scrollTop=0;
+  if(item.kind==="tf"){
+    curMc={ labels:["正確","錯誤"], correct: item.ans ? 0 : 1 };
+    const row=document.createElement("div"); row.className="tf-row";
+    curMc.labels.forEach((label,idx)=>{
+      const b=document.createElement("button");
+      b.className="opt"; b.type="button"; b.textContent=label;
+      b.onclick=()=>answerMc(idx,b);
+      row.appendChild(b);
+    });
+    box.appendChild(row);
+  } else if(item.kind==="mc"){
+    curMc = (item.noShuffle || paper.mode==="test")
+      ? { labels: item.opts.slice(), correct: item.ans }
+      : mixMc(item);
+    curMc.labels.forEach((label,idx)=>{
+      const b=document.createElement("button");
+      b.className="opt"; b.type="button"; b.textContent=label;
+      b.onclick=()=>answerMc(idx,b);
+      box.appendChild(b);
+    });
+  } else {
+    curMc=null;
+    const row=document.createElement("div"); row.className="input-row";
+    const inp=document.createElement("input");
+    inp.type="text"; inp.id="fillAns"; inp.placeholder="輸入答案"; inp.autocomplete="off";
+    inp.setAttribute("enterkeyhint","done");
+    row.appendChild(inp); box.appendChild(row);
+    const go=document.createElement("button");
+    go.type="button"; go.className="go"; go.textContent="提交";
+    go.onclick=()=>answerInput();
+    box.appendChild(go);
+    inp.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); answerInput(); } });
+    setTimeout(()=>{ try{ inp.focus(); }catch(e){} }, 40);
+  }
+}
+
+function afterCorrect(userAns){
+  const item=paper.questions[qi];
+  const mk = itemMarks(item);
+  const pts = firstTry ? mk : 0;
+  if(firstTry){
+    if(item.bonus) bonusScore += pts;
+    else score += pts;
+  }
+  document.getElementById("score").textContent = (paper.mode==="test")
+    ? ("得分 "+score+" / "+totalPts+(bonusPts?(" (+"+bonusScore+" 加分)"):""))
+    : ("得分 "+score);
+  log.push({
+    no:qi+1, sec:item.sec||"", kind:item.kind, q:item.q,
+    ch:item._ch||"", lv:item._lv||"", chTitle:item._chTitle||"",
+    ok:firstTry, ptsGot:pts, ptsMax:mk, bonus:!!item.bonus,
+    correct:correctText(item), userAns:userAns||"", firstTry:firstTry
+  });
+  locked=true;
+  const totLine = (paper.mode==="test")
+    ? ("得分 "+score+" / "+totalPts+(bonusPts?(" · 加分 "+bonusScore+" / "+bonusPts):""))
+    : ("合計 "+score+" / "+totalPts);
+  document.getElementById("why").textContent = firstTry
+    ? ("答對！+"+(item.bonus?pts+" 加分":pts+" 分")+"。"+totLine+"。")
+    : ("改啱喇！第一次唔中，今題 0 分。"+totLine+"。");
+  if(firstTry) celebrate();
+  const last = qi+1 >= paper.questions.length;
+  const nxt=document.getElementById("next");
+  nxt.style.display="block";
+  nxt.textContent = last ? "睇成績" : "下一題";
+  nxt.onclick=()=>goNext();
+}
+
+function answerMc(idx, btn){
+  if(locked || !paper) return;
+  const ok = idx === curMc.correct;
+  document.querySelectorAll("#opts .opt").forEach(b=>b.classList.remove("picked"));
+  btn.classList.add("picked");
+  if(ok){
+    document.querySelectorAll("#opts .opt").forEach(b=>b.disabled=true);
+    btn.classList.add("good");
+    afterCorrect(curMc.labels[idx]);
+  } else {
+    btn.classList.add("bad");
+    btn.disabled=true;
+    firstTry=false;
+    document.getElementById("why").textContent="未啱——再試過。要答啱先至可以去下一題。（今題已無分）";
+    const card=document.getElementById("card");
+    if(card){ card.style.animation="shake .35s ease"; setTimeout(()=>card.style.animation="",400); }
+  }
+}
+
+function answerInput(){
+  if(locked || !paper) return;
+  const item=paper.questions[qi];
+  const input=document.getElementById("fillAns");
+  const raw=input?input.value:"";
+  if(!norm(raw)){ document.getElementById("why").textContent="請先輸入答案。"; return; }
+  const ok=matchInput(raw, item);
+  if(ok){
+    if(input) input.disabled=true;
+    document.querySelectorAll("#opts .go").forEach(b=>b.disabled=true);
+    afterCorrect(raw.trim());
+  } else {
+    firstTry=false;
+    document.getElementById("why").textContent="未啱——再試過。提示："+(item.hint||"睇返課本重點")+"（今題已無分）";
+    const card=document.getElementById("card");
+    if(card){ card.style.animation="shake .35s ease"; setTimeout(()=>card.style.animation="",400); }
+    if(input){ input.select(); }
+  }
+}
+
+function goNext(){
+  if(qi+1 >= paper.questions.length){ settle(false); return; }
+  qi++; showQ();
+}
+
+function analyze(logArr){
+  const bySec={};
+  logArr.forEach(e=>{
+    const k=e.sec||"其他";
+    if(!bySec[k]) bySec[k]={ok:0,n:0};
+    bySec[k].n++; if(e.ok) bySec[k].ok++;
+  });
+  const rows=Object.keys(bySec).map(k=>{
+    const r=bySec[k]; const pct=r.n?Math.round(r.ok/r.n*100):0;
+    return {sec:k, pct, ok:r.ok, n:r.n};
+  }).sort((a,b)=>b.pct-a.pct);
+  const strong=rows.filter(r=>r.pct>=70).slice(0,3);
+  const weak=rows.filter(r=>r.pct<70).sort((a,b)=>a.pct-b.pct).slice(0,3);
+  const wrongs=logArr.filter(e=>!e.ok);
+  return {strong, weak, wrongs, rows};
+}
+
+function settle(early){
+  stopTimer();
+  elapsedMs = Date.now()-startAt;
+  locked=true;
+  document.getElementById("btnSettle").style.display="none";
+  if(early){
+    for(let i=log.length;i<paper.questions.length;i++){
+      const qq=paper.questions[i];
+      log.push({no:i+1, sec:qq.sec||"", kind:qq.kind, q:qq.q, ch:qq._ch||"", lv:qq._lv||"", chTitle:qq._chTitle||"",
+        ok:false, ptsGot:0, ptsMax:itemMarks(qq), bonus:!!qq.bonus, correct:correctText(qq), userAns:"", firstTry:false, skipped:true});
+    }
+  }
+  const pct = totalPts ? Math.round(score/totalPts*100) : 0;
+  const correctN = log.filter(e=>e.ok && !e.bonus).length;
+  const totalN = log.filter(e=>!e.bonus).length;
+  const bonusOk = log.filter(e=>e.ok && e.bonus).length;
+  const bonusN = log.filter(e=>e.bonus).length;
+  document.getElementById("ptitle").textContent=paper.name+" · 成績";
+  document.getElementById("where").textContent="用時 "+fmtTime(elapsedMs)+(early?" · 提早結束":" · 已完成");
+  document.getElementById("scoreHint").textContent="向下捲睇分析同正解";
+  document.getElementById("progFill").style.width="100%";
+
+  let encourage;
+  if(pct>=90) encourage="🌟 好勁！語文根基好穩陣！";
+  else if(pct>=75) encourage="👏 好叻！繼續保持！";
+  else if(pct>=60) encourage="💪 合格有餘——薄弱位再練就更穩！";
+  else if(pct>=40) encourage="🌈 已有基礎——睇錯題同課本重點再衝！";
+  else encourage="🌱 唔好放棄——溫一溫重點再挑戰！";
+
+  const A=analyze(log);
+  let html="";
+  if(early) html+='<div class="report-banner">⏹ 提早結束——未答題目當 0 分。</div>';
+  if(paper.mode==="test"){
+    html+='<div class="report-sum"><strong>得分 '+score+' / '+totalPts+'</strong>（'+pct+'%）';
+    if(bonusPts) html+=' · <strong>加分 '+bonusScore+' / '+bonusPts+'</strong>（額外；唔計入必得分）';
+    html+=' · 首次答對 '+correctN+' / '+totalN+(bonusN?(' · 加分題 '+bonusOk+' / '+bonusN):'')+' · 用時 '+fmtTime(elapsedMs)+'</div>';
+    html+='<div class="report-note">分析以第一次作答結果計算。</div>';
+  } else {
+    html+='<div class="report-sum"><strong>得分 '+score+' / '+totalPts+'</strong>（'+pct+'%） · 首次答對 '+correctN+' / '+totalN+' · 用時 '+fmtTime(elapsedMs)+'</div>';
+  }
+  html+='<div class="report-encourage">'+encourage+'</div>';
+
+  html+='<div class="analysis"><strong>📊 學習分析</strong><br>';
+  if(A.strong.length){
+    html+='強項：'+A.strong.map(r=>esc(r.sec)+'（'+r.pct+'%）').join('、')+'<br>';
+  } else html+='強項：暫時未有課題達 70%+——繼續加油！<br>';
+  if(A.weak.length){
+    html+='宜溫習：'+A.weak.map(r=>esc(r.sec)+'（'+r.pct+'%）').join('、')+'<br>';
+  } else html+='宜溫習：各課題較平均——保持！<br>';
+  if(A.wrongs.length){
+    html+='錯題：有 '+A.wrongs.length+' 題第一次未中——見下方回顧。';
+  } else html+='錯題：全部第一次答對——好嘢！';
+  html+='</div>';
+
+  html+='<p class="report-note">下列為正確答案，並對照你的作答（✓＝第一次得分）。</p>';
+  html+='<div><strong>📖 題目回顧與正解</strong></div>';
+  log.forEach(e=>{
+    const tag = e.ok ? "ok" : "ng";
+    html+='<div class="report-item '+tag+'"><strong>第'+e.no+'題</strong>';
+    if(e.bonus) html+=' <span class="bonus-tag">加分</span>';
+    if(e.ch) html+=' [單元'+e.ch+(e.lv?(' 第'+e.lv+'關'):'')+']';
+    if(e.sec) html+=' '+esc(e.sec);
+    html+='<br>'+esc((e.q||"").length>70?(e.q.slice(0,70)+"…"):(e.q||""));
+    html+='<br>正解：<strong>'+esc(e.correct||"—")+'</strong>';
+    if(e.skipped) html+='　你的答案：（略過）';
+    else if(!e.ok) html+='　你的答案：'+esc(e.userAns||"（多次後改啱／未記錄）");
+    else html+='　你的答案：'+esc(e.userAns||"✓");
+    html+='　'+(e.ok?("✓ +"+e.ptsGot+(e.bonus?" 加分":" 分")):"✗ 0 分");
+    html+='</div>';
+  });
+
+  document.getElementById("q").innerHTML=html;
+  document.getElementById("why").textContent="";
+  const box=document.getElementById("opts"); box.innerHTML="";
+  const nxt=document.getElementById("next"); nxt.style.display="none"; nxt.onclick=null;
+  if(pct>=75) celebrate();
+  const card=document.getElementById("card"); if(card) card.scrollTop=0;
+
+  function add(label, fn){
+    const b=document.createElement("button");
+    b.className="opt"; b.type="button"; b.textContent=label; b.onclick=fn;
+    box.appendChild(b);
+  }
+  const finishedPaper = paper;
+  add("再試一次", ()=>{
+    closePanel();
+    if(finishedPaper && finishedPaper.mode==="combo") startCombo();
+    else if(finishedPaper && finishedPaper.mode==="test"){
+      const tp = TEST_PAPERS.find(t=>t.id===finishedPaper.testPaperId);
+      if(tp) startTestPaper(tp); else renderTestList();
+    } else if(finishedPaper && finishedPaper.mode==="basics"){
+      const topic = BASICS.find(t=>t.id===finishedPaper.basicsId);
+      if(topic) beginPaper({ name: "基礎 · "+topic.title, en: topic.title, questions: topic.questions.map(q=>Object.assign({},q)), mode: "basics", unit: topic.title, basicsId: topic.id });
+      else renderBasicsList();
+    } else if(finishedPaper && finishedPaper.mode==="reading"){
+      const r = READINGS.find(x=>x.id===finishedPaper.readingId);
+      if(r) startReading(r); else renderReadingList();
+    } else if(curCh){
+      const idx=CHAPTERS.indexOf(curCh);
+      renderLevels(curCh, idx>=0?idx:0);
+    } else renderHome();
+  });
+  const backLabel = finishedPaper && finishedPaper.mode==="test" ? "返回測驗卷一覽" :
+      finishedPaper && finishedPaper.mode==="basics" ? "返回基礎知識" :
+      finishedPaper && finishedPaper.mode==="reading" ? "返回閱讀理解" : "返回主頁";
+  add(backLabel, ()=>{
+    closePanel();
+    if(finishedPaper && finishedPaper.mode==="test") renderTestList();
+    else if(finishedPaper && finishedPaper.mode==="basics") renderBasicsList();
+    else if(finishedPaper && finishedPaper.mode==="reading") renderReadingList();
+    else renderHome();
+  });
+  if(finishedPaper && (finishedPaper.mode==="test"||finishedPaper.mode==="basics"||finishedPaper.mode==="reading")){
+    add("返回主頁", ()=>{ closePanel(); renderHome(); });
+  }
+
+  try{
+    P5Platform.report({
+      gameId: GAME_ID, game:"中國語文島 · 中一上", mode: paper.mode||"level",
+      lesson: paper.name||"", detail: paper.unit||"",
+      score: score, maxScore: totalPts, bonusScore: bonusScore, pct: pct, ms: elapsedMs,
+      player: getNick()||undefined
+    });
+  }catch(e){}
+
+  try{
+    const st=loadStore();
+    st.last={ name:paper.name, score, totalPts, pct, ms:elapsedMs, at:Date.now() };
+    st.history=st.history||[];
+    st.history.unshift(st.last);
+    st.history=st.history.slice(0,30);
+    saveStore(st);
+  }catch(e){}
+}
+
+document.getElementById("btnBack").onclick=()=>{
+  if(!paper){ closePanel(); return; }
+  if(confirm("離開會失去今次進度。確定返回？")){
+    const m = paper.mode;
+    closePanel();
+    if(m==="test") renderTestList();
+    else if(m==="basics") renderBasicsList();
+    else if(m==="reading") renderReadingList();
+    else if(curCh){ const idx=CHAPTERS.indexOf(curCh); renderLevels(curCh, idx>=0?idx:0);}
+    else renderHome();
+  }
+};
+document.getElementById("btnSettle").onclick=()=>{
+  if(!paper) return;
+  if(confirm("提早結束？未答題目當 0 分。")) settle(true);
+};
+
+function gateUnlocked(){
+  try{ return sessionStorage.getItem(GATE_KEY)==="1"; }catch(e){ return false; }
+}
+function markGateUnlocked(){
+  try{ sessionStorage.setItem(GATE_KEY,"1"); }catch(e){}
+}
+function hideGate(){
+  const g=document.getElementById("gate");
+  if(g) g.classList.add("pass-ok");
+}
+function showGateError(msg){
+  const el=document.getElementById("gateErr");
+  if(el) el.textContent=msg||"";
+}
+function tryGateUnlock(){
+  const inp=document.getElementById("gatePass");
+  const raw=inp?String(inp.value||""):"";
+  if(raw===GATE_CODE){
+    markGateUnlocked();
+    hideGate();
+    showGateError("");
+    renderHome();
+  } else {
+    showGateError("密碼不正確。");
+    if(inp){ inp.value=""; inp.focus(); }
+  }
+}
+function boot(){
+  if(gateUnlocked()){
+    hideGate();
+    renderHome();
+    return;
+  }
+  const enter=document.getElementById("gateEnter");
+  const inp=document.getElementById("gatePass");
+  if(enter) enter.onclick=tryGateUnlock;
+  if(inp){
+    inp.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); tryGateUnlock(); }});
+    setTimeout(()=>inp.focus(), 50);
+  }
+}
+boot();
+
+</script>
+</body>
+</html>
